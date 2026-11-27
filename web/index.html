@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#183c32" />
+    <meta
+      name="description"
+      content="Blink & Think. A four-light memory game and light studio, hosted on your ESP32."
+    />
+    <title>Blink & Think</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/vendor/qrcode.js" defer></script>
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="#home" aria-label="Blink and Think home"
+          ><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span
+          ><span>Blink <em>&</em> Think<small>SMALL LIGHTS. BIG IDEAS.</small></span></a
+        >
+        <nav aria-label="Main navigation">
+          <a href="#home" data-nav="home"><span aria-hidden="true">⌂</span>Home</a>
+          <a href="#play" data-nav="play"><span aria-hidden="true">▷</span>Play</a>
+          <a href="#studio" data-nav="studio"><span aria-hidden="true">☼</span>Studio</a>
+          <a href="#connect" data-nav="connect"><span aria-hidden="true">▦</span>Connect</a>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="mini-lights" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <p>Made with four LEDs.<br />Powered by your curiosity.</p>
+          <span class="version">ESP32 · v0.2.0</span>
+        </div>
+      </aside>
+      <div class="workspace">
+        <header class="topbar">
+          <div>
+            <span class="eyebrow">YOUR LITTLE LIGHT LAB</span>
+            <p id="pageLabel">Welcome home</p>
+          </div>
+          <div class="top-actions">
+            <span id="connection" class="connection" role="status">Connecting…</span
+            ><label class="name-field"
+              >Player<input
+                id="name"
+                maxlength="20"
+                placeholder="Your name"
+                autocomplete="nickname"
+                aria-label="Player name" /></label
+            ><button id="sound" class="icon-button" aria-pressed="false" title="Toggle sound">
+              Sound off
+            </button>
+          </div>
+        </header>
+        <div id="demoBanner" class="demo-banner" hidden>
+          <strong>Interactive preview</strong
+          ><span>Virtual LEDs only. Your ESP32 is not connected.</span>
+        </div>
+        <div id="networkNotice" class="notice" hidden>
+          <strong>We can't reach your board.</strong> Keep it powered and join the same Wi-Fi.
+          <a href="#connect">Connection help</a>
+        </div>
+        <div id="sessionBar" class="session-bar" hidden>
+          <span id="sessionText"></span
+          ><button id="stop" class="button small secondary" hidden>End session</button>
+        </div>
+        <main id="main" tabindex="-1">
+          <section id="home-view" class="view">
+            <div class="hero">
+              <div class="hero-copy">
+                <span class="eyebrow light">A HANDS-ON MEMORY GAME</span>
+                <h1>Little lights.<br />Big brain energy.</h1>
+                <p>Watch the lights. Find the pattern. See how far your memory takes you.</p>
+                <div class="button-row">
+                  <a href="#play" class="button lime">Let's play</a
+                  ><a href="#studio" class="button ghost">Explore the lights</a>
+                </div>
+                <div class="hero-facts">
+                  <span>4 physical LEDs</span><span>3 ways to play</span
+                  ><span>No app to install</span>
+                </div>
+              </div>
+              <div
+                class="hero-art"
+                aria-label="Four numbered lights: red, green 1, yellow, green 2"
+              >
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+                <div class="light-tile red"><span>●</span><small>RED</small></div>
+                <div class="light-tile green">
+                  <span>▲<b>1</b></span
+                  ><small>GREEN 1</small>
+                </div>
+                <div class="light-tile yellow"><span>★</span><small>YELLOW</small></div>
+                <div class="light-tile green">
+                  <span>◆<b>2</b></span
+                  ><small>GREEN 2</small>
+                </div>
+                <div class="art-label">YOUR FOUR-LIGHT PLAYGROUND</div>
+              </div>
+            </div>
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">PICK YOUR NEXT ADVENTURE</span>
+                <h2>What feels fun today?</h2>
+              </div>
+              <span class="subtle">A little play. A little experimenting.</span>
+            </div>
+            <div class="activity-grid">
+              <a class="activity-card" href="#play"
+                ><span class="card-icon mint">↺</span><span class="eyebrow">MEMORY CHALLENGE</span>
+                <h3>One more round?</h3>
+                <p>
+                  Classic, reverse or a fresh pattern every round. Start slow, then turn up the
+                  pace.
+                </p>
+                <span class="card-link">Choose a game</span></a
+              ><a class="activity-card" href="#studio"
+                ><span class="card-icon peach">☼</span><span class="eyebrow">LIGHT STUDIO</span>
+                <h3>Make a little magic.</h3>
+                <p>Test your wiring, mix the lights or set a festive mood. You're in control.</p>
+                <span class="card-link">Open the studio</span></a
+              ><a class="activity-card" href="#connect"
+                ><span class="card-icon lilac">▦</span><span class="eyebrow">BETTER TOGETHER</span>
+                <h3>Bring your phone.</h3>
+                <p>Same Wi-Fi, same board. Scan the code and take turns with your friends.</p>
+                <span class="card-link">Connect a device</span></a
+              >
+            </div>
+            <div class="how-strip">
+              <strong>New here?</strong><span><b>01</b> Watch the real LEDs</span
+              ><span><b>02</b> Repeat on your screen</span><span><b>03</b> Beat your best</span>
+            </div>
+          </section>
+          <section id="play-view" class="view" hidden>
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">THE MEMORY CHALLENGE</span>
+                <h1>Ready, set, remember.</h1>
+              </div>
+              <a href="#connect" class="text-link">How to play</a>
+            </div>
+            <div class="play-layout">
+              <div class="game-surface">
+                <div class="game-top">
+                  <span id="phaseLabel" class="pill">Ready when you are</span
+                  ><span id="sequenceInfo" class="subtle">Starts with 3 lights</span>
+                </div>
+                <div id="demoBoard" class="virtual-board" hidden>
+                  <span>VIRTUAL BOARD</span>
+                  <div class="virtual-lights">
+                    <i data-virtual="0">R</i><i data-virtual="1">G1</i><i data-virtual="3">Y</i
+                    ><i data-virtual="2">G2</i>
+                  </div>
+                </div>
+                <div class="game-message" aria-live="polite">
+                  <span id="gameGlyph" class="game-glyph" aria-hidden="true">✳</span>
+                  <h2 id="title">Your next personal best?</h2>
+                  <p id="hint">Choose your challenge, then watch the lights on your board.</p>
+                </div>
+                <div class="board" role="group" aria-label="Answer with a light">
+                  <button class="pad red" data-color="0" disabled>
+                    <span class="pad-symbol" aria-hidden="true">●</span><span>Red</span><kbd>1</kbd>
+                  </button>
+                  <button class="pad green" data-color="1" disabled>
+                    <span class="pad-symbol" aria-hidden="true">▲<b>1</b></span
+                    ><span>Green 1</span><kbd>2</kbd>
+                  </button>
+                  <button class="pad yellow" data-color="3" disabled>
+                    <span class="pad-symbol" aria-hidden="true">★</span><span>Yellow</span
+                    ><kbd>3</kbd>
+                  </button>
+                  <button class="pad green" data-color="2" disabled>
+                    <span class="pad-symbol" aria-hidden="true">◆<b>2</b></span
+                    ><span>Green 2</span><kbd>4</kbd>
+                  </button>
+                </div>
+                <div
+                  class="progress"
+                  role="progressbar"
+                  aria-label="Accepted answers"
+                  aria-valuemin="0"
+                  aria-valuemax="3"
+                  aria-valuenow="0"
+                >
+                  <div id="progress"></div>
+                </div>
+                <div class="game-caption">
+                  <span id="caption">Look at the board, then answer here.</span
+                  ><span id="award" role="status"></span>
+                </div>
+              </div>
+              <aside class="game-settings">
+                <div class="scoreboard">
+                  <div><span>ROUND</span><strong id="level">—</strong></div>
+                  <div><span>POINTS</span><strong id="score">0</strong></div>
+                  <div><span>BEST</span><strong id="best">0</strong></div>
+                </div>
+                <form id="startForm" class="panel">
+                  <h3>Make it your challenge.</h3>
+                  <label
+                    >Game mode<select id="mode">
+                      <option value="0">Classic</option>
+                      <option value="1">Reverse</option>
+                      <option value="2">Shuffle</option>
+                    </select></label
+                  >
+                  <p id="modeDescription" class="field-help">
+                    Repeat the pattern. Every round adds one light.
+                  </p>
+                  <label
+                    >Time between lights<select id="speed">
+                      <option value="2000">2 seconds · Take it easy</option>
+                      <option value="1000" selected>1 second · Find your flow</option>
+                      <option value="500">0.5 seconds · Think fast</option>
+                      <option value="250">0.25 seconds · Expert</option>
+                    </select></label
+                  ><button id="start" class="button primary wide" disabled>Start game</button>
+                  <p class="field-help">Keep the screen awake while you play.</p>
+                </form>
+                <div class="tip-card">
+                  <span class="eyebrow">TWO GREENS. ONE TWIST.</span>
+                  <h3>The number matters.</h3>
+                  <p>
+                    Exact light? <strong>1 point.</strong><br />Other green?
+                    <strong>½ a point.</strong><br />Different color? Try another round.
+                  </p>
+                  <p class="subtle">Green 1 is next to red. Green 2 is after yellow.</p>
+                </div>
+              </aside>
+            </div>
+          </section>
+          <section id="studio-view" class="view" hidden>
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">A LITTLE ROOM TO EXPERIMENT</span>
+                <h1>Your light studio.</h1>
+                <p class="subtle">Tap a light. Try an effect. Make something glow.</p>
+              </div>
+              <button id="testLeds" class="button primary" disabled>
+                Test all lights · 1.5s each
+              </button>
+            </div>
+            <div class="studio-layout">
+              <div class="panel studio-main">
+                <div class="game-top">
+                  <h3>The four-light lineup</h3>
+                  <span id="studioStatus" class="pill">Ready to explore</span>
+                </div>
+                <p class="subtle">In the same order as your breadboard.</p>
+                <div class="manual-pads" role="group" aria-label="Toggle physical lights">
+                  <button data-led="0" class="red" aria-pressed="false" disabled>
+                    <span class="bulb">●</span><strong>Red</strong><small>LIGHT 1</small></button
+                  ><button data-led="1" class="green" aria-pressed="false" disabled>
+                    <span class="bulb">▲<b>1</b></span
+                    ><strong>Green 1</strong><small>LIGHT 2</small></button
+                  ><button data-led="3" class="yellow" aria-pressed="false" disabled>
+                    <span class="bulb">★</span><strong>Yellow</strong><small>LIGHT 3</small></button
+                  ><button data-led="2" class="green" aria-pressed="false" disabled>
+                    <span class="bulb">◆<b>2</b></span
+                    ><strong>Green 2</strong><small>LIGHT 4</small>
+                  </button>
+                </div>
+                <p id="testStatus" class="test-status" role="status">
+                  Tap any light to begin a session. Test mode checks each light at 50% brightness.
+                </p>
+                <div class="button-row">
+                  <button id="allOn" class="button secondary" disabled>All on</button
+                  ><button id="allOff" class="button secondary" disabled>All off</button
+                  ><button id="releaseStudio" class="button text-button" hidden>
+                    End studio session
+                  </button>
+                </div>
+                <div class="brightness-control">
+                  <label for="brightness"
+                    >Brightness <output id="brightnessValue">35%</output></label
+                  ><input id="brightness" type="range" min="0" max="100" value="35" disabled /><span
+                    class="field-help"
+                    >Adjust together. Applies when you release the slider.</span
+                  >
+                </div>
+              </div>
+              <div class="panel effects-panel">
+                <span class="eyebrow">SET THE MOOD</span>
+                <h3>A pattern for every moment.</h3>
+                <label
+                  >Light effect<select id="effect">
+                    <option value="0">Manual · Your own mix</option>
+                    <option value="1">Chase · Follow the lights</option>
+                    <option value="2">Blink · All together</option>
+                    <option value="3">Christmas · Festive sparkle</option>
+                    <option value="4">Breathe · Slow and steady</option>
+                    <option value="5">Bounce · There and back</option>
+                  </select></label
+                ><label
+                  >Step duration<select id="effectSpeed">
+                    <option value="2000">2 seconds</option>
+                    <option value="1000">1 second</option>
+                    <option value="500" selected>0.5 seconds</option>
+                    <option value="250">0.25 seconds</option>
+                  </select></label
+                >
+                <div class="small-note">
+                  <strong>One board, one session.</strong>
+                  <p>
+                    End your session to let someone else play. If your phone disconnects or locks,
+                    the lights switch off within 15 seconds.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section id="connect-view" class="view" hidden>
+            <div class="section-heading">
+              <div>
+                <span class="eyebrow">LESS SETUP. MORE PLAY.</span>
+                <h1>Bring everyone into the loop.</h1>
+                <p class="subtle">Any modern browser. No account or phone app needed.</p>
+              </div>
+            </div>
+            <div class="connect-layout">
+              <div class="panel share-panel">
+                <span class="eyebrow">OPEN ON YOUR PHONE</span>
+                <h2>Scan. Join. Play.</h2>
+                <div
+                  id="qrCode"
+                  class="qr-box"
+                  role="img"
+                  aria-label="QR code linking to this ESP32"
+                >
+                  <span>Connect to a board to share its address.</span>
+                </div>
+                <a id="deviceAddress" class="device-address"></a
+                ><button id="copyLink" class="button secondary" disabled>Copy game link</button>
+                <p id="copyStatus" role="status" class="field-help"></p>
+                <p class="field-help">
+                  This code opens the game. It does not connect your phone to Wi-Fi.
+                </p>
+              </div>
+              <div class="panel">
+                <h3>A smooth start, every time.</h3>
+                <ol class="steps">
+                  <li>
+                    <strong>Power the board.</strong>
+                    <p>
+                      Connect USB and allow about 10–30 seconds for Wi-Fi. Saved credentials survive
+                      power-off.
+                    </p>
+                  </li>
+                  <li>
+                    <strong>Join the same local network.</strong>
+                    <p>
+                      Your phone can use 2.4 or 5 GHz if the router allows devices to communicate.
+                      ESP32 uses 2.4 GHz.
+                    </p>
+                  </li>
+                  <li>
+                    <strong>Scan the code or open the address.</strong>
+                    <p>
+                      Try <a href="http://color-game.local">http://color-game.local</a>. If it
+                      doesn't resolve, use the device IP shown here or in Serial Monitor.
+                    </p>
+                  </li>
+                  <li>
+                    <strong>Make it one tap away.</strong>
+                    <p>
+                      On iPhone, open the game in Safari, tap Share, then Add to Home Screen. The
+                      board must still be powered and reachable.
+                    </p>
+                  </li>
+                </ol>
+              </div>
+            </div>
+            <div class="help-grid">
+              <details class="panel">
+                <summary>First-time Wi-Fi setup</summary>
+                <p>
+                  Join <strong>ESP32-Color-Setup</strong> using the unique password printed in
+                  Serial Monitor at 115200 baud. Open <strong>http://192.168.4.1</strong>, select
+                  your own 2.4 GHz network and save its password. Then return your phone to that
+                  network.
+                </p>
+                <p>
+                  To change networks later: press and release EN, then hold BOOT for 3 seconds
+                  during the first 4 seconds after reset. Do not hold BOOT during reset.
+                </p>
+              </details>
+              <details class="panel">
+                <summary>The game won't open</summary>
+                <p>
+                  Keep the board powered, check that both devices use the same LAN and try the
+                  current IP from Serial Monitor. A guest network, VPN or client isolation can block
+                  access. Reconnecting USB does not erase the game.
+                </p>
+              </details>
+              <details class="panel">
+                <summary>Rules & scoring</summary>
+                <p>
+                  Start with 3 lights; finish a round to add another, up to 32. Classic extends the
+                  sequence, Reverse asks for it backwards and Shuffle makes a fresh sequence each
+                  round.
+                </p>
+                <p>
+                  Exact light: 1 point. Other green: 0.5 points and continue. Wrong color or 30
+                  seconds without an answer ends your turn. Best scores are separate for each mode
+                  and speed, saved when the turn ends.
+                </p>
+              </details>
+              <details class="panel">
+                <summary>Playing with friends</summary>
+                <p>
+                  Everyone needs to see the physical LEDs. One person plays or controls the lights
+                  at a time; others can watch the score and take the next turn. There is no
+                  automatic queue or simultaneous multiplayer.
+                </p>
+              </details>
+            </div>
+          </section>
+        </main>
+        <p id="error" class="error" role="alert"></p>
+        <footer class="footer">
+          <span>Blink & Think · Built to be tinkered with.</span
+          ><a href="#connect">Connection help</a>
+        </footer>
+      </div>
+    </div>
+    <noscript>This game needs JavaScript enabled in your browser.</noscript>
+  </body>
+</html>

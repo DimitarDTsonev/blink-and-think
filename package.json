@@ -1,0 +1,21 @@
+{
+  "name": "blink-and-think",
+  "version": "0.2.0",
+  "private": true,
+  "description": "A local ESP32 memory game and four-LED light studio",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node tests/preview_test.cjs && node tests/browser_test.cjs",
+    "test:browser": "node tests/browser_test.cjs",
+    "test:preview": "node tests/preview_test.cjs",
+    "format": "prettier --write web/*.html web/*.css web/app.js web/setup.js preview/demo.js tests/*.cjs",
+    "format:check": "prettier --check web/*.html web/*.css web/app.js web/setup.js preview/demo.js tests/*.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.65.1",
+    "prettier": "3.6.2"
+  }
+}

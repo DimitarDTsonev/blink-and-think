@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#183c32" />
+    <title>Connect your board · Blink & Think</title>
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="stylesheet" href="/style.css" />
+    <script src="/setup.js" defer></script>
+  </head>
+  <body class="setup-page">
+    <main>
+      <a class="brand" href="/"
+        ><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span
+        ><span>Blink <em>&</em> Think</span></a
+      ><span class="eyebrow">FIRST, A LITTLE CONNECTION</span>
+      <h1>One network.<br />Everyone in the game.</h1>
+      <p class="subtle">
+        Connect your board to your own 2.4 GHz Wi-Fi. Your credentials stay on the ESP32.
+      </p>
+      <form id="wifi" class="panel">
+        <h3>Let's get your board online.</h3>
+        <label
+          >Nearby 2.4 GHz networks<select id="networks" disabled>
+            <option value="">Looking for networks…</option>
+          </select></label
+        >
+        <p id="scanInfo" class="field-help" role="status"></p>
+        <label
+          >Network name<input
+            name="ssid"
+            maxlength="32"
+            autocomplete="off"
+            autocapitalize="none"
+            spellcheck="false"
+            required
+            placeholder="Your Wi-Fi name" /></label
+        ><label for="password">Wi-Fi password</label>
+        <div class="password-row">
+          <input
+            id="password"
+            name="password"
+            type="password"
+            maxlength="63"
+            autocomplete="off"
+          /><button id="showPassword" class="button secondary" type="button" aria-pressed="false">
+            Show
+          </button>
+        </div>
+        <p class="field-help">Leave blank only for an open network.</p>
+        <button id="submit" class="button primary wide">Save & connect</button>
+        <p id="status" role="status" aria-live="polite"></p>
+      </form>
+      <section id="savedSteps" hidden>
+        <h3>You're almost ready.</h3>
+        <ol class="steps">
+          <li>Allow about 30 seconds for the board to restart.</li>
+          <li>Return your phone to the Wi-Fi network you just selected.</li>
+          <li>Open <a href="http://color-game.local">http://color-game.local</a>.</li>
+        </ol>
+        <p class="field-help">
+          If that name doesn't open, use the IP printed in Serial Monitor. If setup fails, reconnect
+          to ESP32-Color-Setup with the same setup password and try again.
+        </p>
+      </section>
+      <p class="subtle">
+        Already configured? Each time you power the board, it reconnects automatically. This page is
+        only needed for first-time setup or changing networks.
+      </p>
+    </main>
+    <noscript>Enable JavaScript to set up Wi-Fi.</noscript>
+  </body>
+</html>

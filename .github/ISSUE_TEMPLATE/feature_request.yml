@@ -1,0 +1,14 @@
+name: Feature idea
+description: Suggest an improvement.
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to do?
+      description: Explain the player experience or hardware experiment, not just the implementation.
+    validations:
+      required: true
+  - type: textarea
+    id: hardware
+    attributes:
+      label: Does it require different hardware?

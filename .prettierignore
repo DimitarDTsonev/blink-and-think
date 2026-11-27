@@ -1,0 +1,7 @@
+.pio
+node_modules
+dist
+web/vendor
+preview/index.html
+package-lock.json
+docs/images

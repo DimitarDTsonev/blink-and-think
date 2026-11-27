@@ -1,0 +1,25 @@
+# Build products and local dependencies
+.pio/
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+dist/
+.test-build/
+test-results/
+playwright-report/
+
+# Per-machine settings and credentials
+.env
+.env.*
+!.env.example
+platformio.local.ini
+secrets.h
+*.log
+*.dump
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/ipch/
+.DS_Store
+Thumbs.db
